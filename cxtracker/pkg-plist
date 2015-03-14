@@ -1,2 +1,2 @@
 bin/cxtracker
-@dir(root,wheel,750) /var/db/passivedns
+@dir(root,wheel,750) /var/db/cxtracker
