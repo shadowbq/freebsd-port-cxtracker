@@ -1,0 +1,139 @@
+# This is a shell archive.  Save it in a file, remove anything before
+# this line, and then unpack it by entering "sh file".  Note, it may
+# create directories; files and directories will be owned by you and
+# have default permissions.
+#
+# This archive contains:
+#
+#	cxtracker
+#	cxtracker/Makefile
+#	cxtracker/pkg-descr
+#	cxtracker/pkg-plist
+#	cxtracker/distinfo
+#	cxtracker/files
+#	cxtracker/files/pkg-message.in
+#	cxtracker/files/cxtracker.in
+#
+echo c - cxtracker
+mkdir -p cxtracker > /dev/null 2>&1
+echo x - cxtracker/Makefile
+sed 's/^X//' >cxtracker/Makefile << 'a05b1555aac2488461509e1b09377ebd'
+X# $FreeBSD$
+X
+XPORTNAME=	cxtracker
+XDISTVERSION= ${GH_COMMIT}
+XCATEGORIES=	security
+XDISTFILES=	shadowbq-cxtracker-0.9.9.0-ga6c7e26.tar.gz
+X
+XMAINTAINER=	shadowbq@gmail.com
+XCOMMENT=	Network sniffer that generates IPFIX type logs
+X
+XLICENSE=	GPLv2
+X
+XUSE_GITHUB=	yes
+XGH_ACCOUNT=	shadowbq
+XGH_PROJECT=	cxtracker
+XGH_TAG=		${GH_COMMIT}
+XGH_COMMIT=	6e0bd73
+X
+XSUB_FILES=	pkg-message
+X
+XWRKSRC=		${WRKDIR}/shadowbq-cxtracker-6e0bd73/src
+X
+XUSE_RC_SUBR=	cxtracker
+X
+X.include <bsd.port.options.mk>
+X
+Xdo-install:
+X	${INSTALL_PROGRAM} ${WRKSRC}/bin/cxtracker \
+X		${STAGEDIR}${PREFIX}/bin
+X	${MKDIR} ${STAGEDIR}/var/db/cxtracker
+X
+X.include <bsd.port.mk>
+a05b1555aac2488461509e1b09377ebd
+echo x - cxtracker/pkg-descr
+sed 's/^X//' >cxtracker/pkg-descr << '4639b7c432f003a305c4036f32a0e8ab'
+4639b7c432f003a305c4036f32a0e8ab
+echo x - cxtracker/pkg-plist
+sed 's/^X//' >cxtracker/pkg-plist << '576ca013268e8f4303adf0cb5b090c47'
+Xbin/cxtracker
+X@dir(root,wheel,750) /var/db/cxtracker
+576ca013268e8f4303adf0cb5b090c47
+echo x - cxtracker/distinfo
+sed 's/^X//' >cxtracker/distinfo << '771ee26d797686c428128a31990e981c'
+XSHA256 (shadowbq-cxtracker-0.9.9.0-ga6c7e26.tar.gz) = 6781b38742a2c44d915fed5acaa348131329a87b1ee41efbe7799adb31736784
+XSIZE (shadowbq-cxtracker-0.9.9.0-ga6c7e26.tar.gz) = 48408
+771ee26d797686c428128a31990e981c
+echo c - cxtracker/files
+mkdir -p cxtracker/files > /dev/null 2>&1
+echo x - cxtracker/files/pkg-message.in
+sed 's/^X//' >cxtracker/files/pkg-message.in << 'd519ec22b3e35b9280a593d5568f7355'
+X***********************************
+X* !!!!!!!!!!! WARNING !!!!!!!!!!! *
+X***********************************
+X
+XA startup script 'cxtracker' was installed in /usr/local/etc/rc.d/.  Enable 
+Xthe script in /etc/rc.conf using the usual rc.subr syntax.  See rc.conf(5) 
+Xor go to the FreeBSD Handbook - (http://goo.gl/9WboJZ)
+X
+XType "cxtracker -h" on the commandline for usage instructions.
+X
+d519ec22b3e35b9280a593d5568f7355
+echo x - cxtracker/files/cxtracker.in
+sed 's/^X//' >cxtracker/files/cxtracker.in << '59e5ecff4ea331bed1b6001b1ccbd6be'
+X#!/bin/sh
+X#
+X
+X# PROVIDE: cxtracker
+X# REQUIRE: DAEMON
+X# BEFORE: LOGIN
+X# KEYWORD: shutdown
+X
+X# Add the following lines to /etc/rc.conf to enable snort:
+X# cxtracker_enable (bool):      Set to YES to enable
+X#                 Default: NO
+X# cxtracker_logdir (str):   Logging Directory
+X#               Default: "/var/db/cxtracker"
+X# cxtracker_format (str):   Logging Format
+X#               Default: "logstash"
+X# cxtracker_interface (str):  Network interface to sniff
+X#               Default: ""
+X# cxtracker_flags (str):    Extra flags passed 
+X#               Default: ""
+X
+X. /etc/rc.subr
+X
+Xname=cxtracker
+Xrcvar=cxtracker_enable
+X
+Xload_rc_config ${name}
+X
+X[ -z "$cxtracker_enable" ]    && cxtracker_enable="NO"
+X[ -z "$cxtracker_logdir" ]    && cxtracker_logdir="/var/db/cxtracker"
+X[ -z "$cxtracker_format" ]    && cxtracker_format="logstash"
+X[ -z "$cxtracker_flags" ]     && cxtracker_flags=""
+X[ -z "$cxtracker_interface" ]     && cxtracker_interface=""
+X
+Xpiddir=/var/run
+Xpidfile=${piddir}/${name}.pid
+X
+X
+Xif [ -d $piddir ]; then
+X  mkdir -p $piddir
+Xfi
+X
+Xlogdir="/var/db/cxtracker"
+X
+Xif [ ! -d $logdir ]; then
+X  mkdir -p $logdir
+Xfi
+X
+Xcommand="/opt/sbin/cxtracker"
+Xcommand_args="-i ${cxtracker_interface} -d ${cxtracker_logdir} -f ${cxtracker_format} -D ${cxtracker_flags}"
+X
+Xrequire_files="${command}"
+X
+Xrun_rc_command "$1"
+59e5ecff4ea331bed1b6001b1ccbd6be
+exit
+
