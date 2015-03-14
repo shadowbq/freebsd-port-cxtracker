@@ -1,0 +1,6 @@
+wget https://github.com/shadowbq/cxtracker/archive/master.zip
+unzip master.zip
+cd cxtracker-master
+cd src && make && make test
+sudo mkdir -p /opt/sbin
+sudo cp bin/cxtracker /opt/sbin/
