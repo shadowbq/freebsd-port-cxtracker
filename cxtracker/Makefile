@@ -18,14 +18,14 @@ GH_COMMIT=	6e0bd73
 
 SUB_FILES=	pkg-message
 
-USES=		gmake
+WRKSRC=		${WRKDIR}/shadowbq-cxtracker-6e0bd73/src
 
 USE_RC_SUBR=	cxtracker
 
 .include <bsd.port.options.mk>
 
 do-install:
-	${INSTALL_PROGRAM} ${WRKSRC}/src/bin/cxtracker \
+	${INSTALL_PROGRAM} ${WRKSRC}/bin/cxtracker \
 		${STAGEDIR}${PREFIX}/bin
 	${MKDIR} ${STAGEDIR}/var/db/cxtracker
 
