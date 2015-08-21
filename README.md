@@ -1,4 +1,4 @@
-# freebsd-port-passivedns
+# freebsd-port-cxtracker
 FreeBSD port maintainer package for security/cxtracker
 
 www: https://github.com/gamelinux/cxtracker
