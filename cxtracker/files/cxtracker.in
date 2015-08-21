@@ -45,7 +45,7 @@ if [ ! -d $logdir ]; then
   mkdir -p $logdir
 fi
 
-command="/opt/sbin/cxtracker"
+command="/usr/local/bin/cxtracker"
 command_args="-i ${cxtracker_interface} -d ${cxtracker_logdir} -f ${cxtracker_format} -D ${cxtracker_flags}"
 
 require_files="${command}"
